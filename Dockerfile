@@ -9,8 +9,6 @@ ENV TZ=Europe/Andorra
 
 RUN apt update && apt -y upgrade
 
-COPY install_deps.R /install_deps.R
-
 RUN apt install -y --no-install-recommends \
         # libsodium-dev \
         # libcurl4-openssl-dev \
@@ -22,5 +20,3 @@ RUN apt install -y --no-install-recommends \
         r-cran-plumber \
         r-cran-rsqlite \
         r-cran-stringi
-
-RUN Rscript /install_deps.R
