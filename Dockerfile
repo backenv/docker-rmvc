@@ -1,17 +1,11 @@
 FROM debian:10
 
-# EXPOSE 80
-# EXPOSE 443
-# EXPOSE 8000
-
 ENV TZ=Europe/Andorra
-# ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt -y upgrade
 
 RUN apt install -y --no-install-recommends \
-        # libsodium-dev \
-        # libcurl4-openssl-dev \
         r-base-core \
         r-cran-curl \
         r-cran-dbi \
