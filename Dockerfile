@@ -1,4 +1,4 @@
-FROM debian:10
+FROM debian:bullseye
 
 ENV TZ=Europe/Andorra
 ENV DEBIAN_FRONTEND=noninteractive
