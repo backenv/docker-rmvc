@@ -1,10 +1,10 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV TZ=Europe/Andorra
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt -y upgrade && apt -y install software-properties-common dirmngr
 
-ENV DEB_TAG="bionic-cran35"
+ENV DEB_TAG="bionic-cran40"
 ENV DEB_KEY="E298A3A825C0D65DFD57CBB651716619E084DAB9"
 ENV DEB_URL="http://cloud.r-project.org/bin/linux/ubuntu"
 ENV DEB_KEYSRV="keyserver.ubuntu.com"
