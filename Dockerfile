@@ -1,18 +1,22 @@
-FROM debian:bullseye
+FROM ubuntu:18.04
 
 ENV TZ=Europe/Andorra
 ENV DEBIAN_FRONTEND=noninteractive
-ENV DEBIAN_REPOKEY=E19F5F87128899B192B1A2C2AD5F960A256A04AF
-ENV DEBIAN_REPODEB="deb [arch=amd64] http://cloud.r-project.org/bin/linux/debian bullseye-cran40/"
+RUN apt update && apt -y upgrade && apt -y install software-properties-common dirmngr
 
-RUN apt update && apt -y upgrade && apt -y install gnupg
+ENV DEB_TAG="bionic-cran35"
+ENV DEB_KEY="E298A3A825C0D65DFD57CBB651716619E084DAB9"
+ENV DEB_URL="http://cloud.r-project.org/bin/linux/ubuntu"
+ENV DEB_KEYSRV="keyserver.ubuntu.com"
+ENV DEB_CODE="deb [arch=amd64] ${DEB_URL} ${DEB_TAG}/"
 
-RUN echo ${DEBIAN_REPODEB} > /etc/apt/sources.list.d/r-cran.list && \
-  apt-key adv --keyserver keys.gnupg.net --recv-key ${DEBIAN_REPOKEY}
+RUN echo ${DEB_CODE} > /etc/apt/sources.list.d/r-cran.list && \
+  apt-key adv --keyserver ${DEB_KEYSRV} --recv-key ${DEB_KEY} && \
+  add-apt-repository ppa:c2d4u.team/c2d4u4.0+
 
-
-RUN apt update && apt install -y --no-install-recommends \
-	-t bullseye-cran40 \
+RUN apt update && apt install -y \
+        --no-install-recommends \
+	-t ${DEB_TAG} \
         r-base-core \
         r-cran-curl \
         r-cran-dbi \
@@ -22,4 +26,6 @@ RUN apt update && apt install -y --no-install-recommends \
         r-cran-rsqlite \
         r-cran-stringi
 
-RUN apt -y remove gnupg && apt -y autoremove
+RUN apt -y remove software-properties-common dirmngr && \
+    apt -y autoremove && \
+    unset DEB_KEY DEB_TAG DEB_URL DEB_CODE
